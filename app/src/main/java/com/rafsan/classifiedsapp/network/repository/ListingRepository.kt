@@ -30,7 +30,7 @@ class ListingRepository @Inject constructor(
 
     suspend fun saveListing(item: Results) = localDataSource.insertListingResponse(item)
 
-    fun getSavedListings() = localDataSource.getAllListings()
+    suspend fun getSavedListings() = localDataSource.getAllListings()
 
     suspend fun deleteAllListings() = localDataSource.deleteAllListings()
 }

@@ -2,8 +2,8 @@
     <string name="app_name">Classifieds App</string>
     <string name="product_name">Product name:</string>
     <string name="notebook">Notebook</string>
-    <string name="price">Price</string>
-    <string name="created_at">Created at</string>
+    <string name="price">Price:</string>
+    <string name="created_at">Created at:</string>
     <string name="aed_50">AED 50</string>
     <string name="_2020_8_90">2020-8-90</string>
 </resources>

@@ -13,7 +13,7 @@ interface ListingDao {
     suspend fun insertListingResponse(item: Results): Long
 
     @Query("SELECT * FROM listings")
-    fun getAllListings(): List<Results>
+    suspend fun getAllListings(): List<Results>
 
     @Query("Delete FROM listings")
     suspend fun deleteAllListings()
