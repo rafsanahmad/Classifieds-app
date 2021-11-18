@@ -1,4 +1,4 @@
-package com.rafsan.classifiedsapp.data
+package com.rafsan.classifiedsapp.data.model
 
 data class Results(
     val pagination: Pagination,

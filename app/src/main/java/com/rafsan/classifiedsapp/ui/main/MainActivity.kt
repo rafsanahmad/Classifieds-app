@@ -1,4 +1,4 @@
-package com.rafsan.classifiedsapp
+package com.rafsan.classifiedsapp.ui.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
