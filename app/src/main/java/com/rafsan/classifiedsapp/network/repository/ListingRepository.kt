@@ -1,7 +1,6 @@
 package com.rafsan.classifiedsapp.network.repository
 
 import com.rafsan.classifiedsapp.data.local.ListingDao
-import com.rafsan.classifiedsapp.data.model.Result
 import com.rafsan.classifiedsapp.data.model.Results
 import com.rafsan.classifiedsapp.network.api.ApiHelper
 import com.rafsan.classifiedsapp.utils.NetworkResult
@@ -17,6 +16,9 @@ class ListingRepository @Inject constructor(
             val response = remoteDataSource.getListings()
             val result = response.body()
             if (response.isSuccessful && result != null) {
+                //Save into local DB
+                deleteAllListings()
+                saveListing(result)
                 NetworkResult.Success(result)
             } else {
                 NetworkResult.Error("An error occurred")
@@ -26,11 +28,9 @@ class ListingRepository @Inject constructor(
         }
     }
 
-    suspend fun saveListing(item: Result) = localDataSource.upsert(item)
+    suspend fun saveListing(item: Results) = localDataSource.insertListingResponse(item)
 
     fun getSavedListings() = localDataSource.getAllListings()
-
-    suspend fun deleteListing(item: Result) = localDataSource.deleteListing(item)
 
     suspend fun deleteAllListings() = localDataSource.deleteAllListings()
 }

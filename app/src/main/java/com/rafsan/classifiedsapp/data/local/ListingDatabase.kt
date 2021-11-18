@@ -5,14 +5,16 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.rafsan.classifiedsapp.data.model.Result
+import com.rafsan.classifiedsapp.data.local.converter.CustomConverter
+import com.rafsan.classifiedsapp.data.local.converter.ResultListConverter
+import com.rafsan.classifiedsapp.data.model.Results
 
 @Database(
-    entities = [Result::class],
+    entities = [Results::class],
     version = 1,
     exportSchema = false
 )
-@TypeConverters(StringListConverter::class)
+@TypeConverters(CustomConverter::class, ResultListConverter::class)
 abstract class ListingDatabase : RoomDatabase() {
 
     abstract fun getListingDao(): ListingDao

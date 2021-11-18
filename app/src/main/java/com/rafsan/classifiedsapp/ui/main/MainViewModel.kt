@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rafsan.classifiedsapp.data.model.Result
 import com.rafsan.classifiedsapp.data.model.Results
 import com.rafsan.classifiedsapp.di.CoroutinesDispatcherProvider
 import com.rafsan.classifiedsapp.network.repository.ListingRepository
@@ -58,7 +57,12 @@ class MainViewModel @Inject constructor(
 
             }
         } else {
-            _errorToast.value = "No internet available"
+            _errorToast.value = "No internet available."
+            //Load from local
+            val localListing = getListingFromLocal()
+            if (localListing.isNotEmpty()) {
+                _listingResponse.postValue(NetworkResult.Success(localListing[0]))
+            }
         }
     }
 
@@ -69,28 +73,10 @@ class MainViewModel @Inject constructor(
         return NetworkResult.Error("No data found")
     }
 
-    fun getListingFromLocal() = repository.getSavedListings()
+    private fun getListingFromLocal() = repository.getSavedListings()
 
     fun hideErrorToast() {
         _errorToast.value = ""
-    }
-
-    fun saveListing(item: Result) {
-        val coroutineExceptionHandler = CoroutineExceptionHandler { _, exception ->
-            onError(exception)
-        }
-        viewModelScope.launch(coroutinesDispatcherProvider.io + coroutineExceptionHandler) {
-            repository.saveListing(item)
-        }
-    }
-
-    fun deleteAllListing() {
-        val coroutineExceptionHandler = CoroutineExceptionHandler { _, exception ->
-            onError(exception)
-        }
-        viewModelScope.launch(coroutinesDispatcherProvider.io + coroutineExceptionHandler) {
-            repository.deleteAllListings()
-        }
     }
 
     private fun onError(throwable: Throwable) {

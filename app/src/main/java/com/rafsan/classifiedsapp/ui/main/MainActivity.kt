@@ -1,5 +1,6 @@
 package com.rafsan.classifiedsapp.ui.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -8,10 +9,12 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.rafsan.classifiedsapp.base.BaseActivity
 import com.rafsan.classifiedsapp.databinding.ActivityMainBinding
+import com.rafsan.classifiedsapp.ui.detail.DetailActivity
 import com.rafsan.classifiedsapp.ui.main.adapter.ListingAdapter
 import com.rafsan.classifiedsapp.utils.Constants.Companion.CACHE_SIZE
 import com.rafsan.classifiedsapp.utils.NetworkResult
 import com.rafsan.image_lib.ImageLoader
+import com.rafsan.image_lib.cache.CacheType
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -24,15 +27,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun onViewReady(savedInstanceState: Bundle?) {
         super.onViewReady(savedInstanceState)
-        setupUI()
+        configImageLoader()
         setupRecyclerView()
         setupObservers()
     }
 
     override fun setBinding(): ActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
 
-    private fun setupUI() {
-        imageLoader = ImageLoader.getInstance(this, CACHE_SIZE)
+    private fun configImageLoader() {
+        imageLoader = ImageLoader.getInstance(this, CACHE_SIZE, CacheType.DISK)
     }
 
     private fun setupRecyclerView() {
@@ -42,11 +45,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             layoutManager = GridLayoutManager(this@MainActivity, 2)
         }
         listingAdapter.setOnItemClickListener { item ->
-            val bundle = Bundle().apply {
-                putSerializable("item", item)
-            }
             //Navigate to detail
-
+            val intent = Intent(this, DetailActivity::class.java)
+            intent.putExtra("item", item)
+            startActivity(intent)
         }
     }
 

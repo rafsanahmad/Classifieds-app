@@ -1,20 +1,19 @@
 package com.rafsan.classifiedsapp.data.local
 
-import androidx.lifecycle.LiveData
-import androidx.room.*
-import com.rafsan.classifiedsapp.data.model.Result
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import com.rafsan.classifiedsapp.data.model.Results
 
 @Dao
 interface ListingDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun upsert(item: Result): Long
+    suspend fun insertListingResponse(item: Results): Long
 
     @Query("SELECT * FROM listings")
-    fun getAllListings(): LiveData<List<Result>>
-
-    @Delete
-    suspend fun deleteListing(item: Result)
+    fun getAllListings(): List<Results>
 
     @Query("Delete FROM listings")
     suspend fun deleteAllListings()

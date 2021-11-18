@@ -49,9 +49,11 @@ class ListingAdapter(loader: ImageLoader) :
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = differ.currentList[position]
         with(holder) {
-            if (item.image_urls_thumbnails.isNotEmpty()) {
-                val imageUrl = item.image_urls_thumbnails[0]
-                imageLoader.downloadImage(imageUrl, binding.itemThumb, R.drawable.placeholder)
+            item.image_urls_thumbnails?.let { thumbs ->
+                if (thumbs.isNotEmpty()) {
+                    val imageUrl = thumbs[0]
+                    imageLoader.downloadImage(imageUrl, binding.itemThumb, R.drawable.placeholder)
+                }
             }
             binding.itemName.text = item.name
         }
