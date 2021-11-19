@@ -58,8 +58,6 @@ class MainViewModel @Inject constructor(
             }
         } else {
             _errorToast.value = "No internet available."
-            //Load from local
-            getListingFromLocal()
         }
     }
 
@@ -70,7 +68,7 @@ class MainViewModel @Inject constructor(
         return NetworkResult.Error("No data found")
     }
 
-    private fun getListingFromLocal() {
+    fun getListingFromLocal() {
         viewModelScope.launch {
             val localListing = repository.getSavedListings()
             if (!localListing.isNullOrEmpty()) {

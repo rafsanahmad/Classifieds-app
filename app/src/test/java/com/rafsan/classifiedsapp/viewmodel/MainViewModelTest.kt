@@ -42,10 +42,10 @@ class MainViewModelTest {
     @Mock
     private lateinit var listingRepo: ListingRepository
 
-    private val testDispatcher = coroutineRule.testDispatcher
-
     @Mock
     private lateinit var responseObserver: Observer<NetworkResult<Results>>
+
+    private val testDispatcher = coroutineRule.testDispatcher
     private lateinit var viewModel: MainViewModel
 
     @Before
@@ -56,6 +56,47 @@ class MainViewModelTest {
             networkHelper = networkHelper,
             coroutinesDispatcherProvider = provideFakeCoroutinesDispatcherProvider(testDispatcher)
         )
+    }
+
+    @Test
+    fun `test network fetch is called when local db is empty`() {
+        coroutineRule.runBlockingTest {
+            whenever(networkHelper.isNetworkConnected())
+                .thenReturn(true)
+            viewModel.listingResponse.observeForever(responseObserver)
+
+            // Stub repository with fake listings
+            whenever(listingRepo.getListings())
+                .thenAnswer { (FakeDataUtil.getFakeListingResponse()) }
+
+            whenever(listingRepo.getSavedListings())
+                .thenReturn(null) //null or empty list from local DB
+
+            //when
+            viewModel.getListingFromLocal()
+
+            //Then
+            assertThat(viewModel.listingResponse.value).isNotNull()
+            val results = viewModel.listingResponse.value?.data?.results
+            // compare the response with fake list
+            assertThat(results).hasSize(FakeDataUtil.getFakeListings().size)
+        }
+    }
+
+    @Test
+    fun `test local db is called when local repository is not empty`() {
+        coroutineRule.runBlockingTest {
+            whenever(listingRepo.getSavedListings())
+                .thenReturn(FakeDataUtil.getFakeListingList())
+
+            //when
+            viewModel.getListingFromLocal()
+
+            //then
+            assertThat(viewModel.listingResponse.value).isNotNull()
+            val results = viewModel.listingResponse.value?.data?.results
+            assertThat(results).hasSize(FakeDataUtil.getFakeListingList()[0].results.size)
+        }
     }
 
     @Test
