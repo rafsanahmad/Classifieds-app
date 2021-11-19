@@ -43,6 +43,16 @@ android {
             returnDefaultValues = true
         }
     }
+
+    android.sourceSets {
+        test {
+            java.srcDirs += "$projectDir/src/testShared"
+        }
+
+        androidTest {
+            java.srcDirs += "$projectDir/src/testShared"
+        }
+    }
 }
 
 dependencies {
@@ -100,7 +110,16 @@ dependencies {
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$rootProject.coroutineTestVersion"
     androidTestImplementation "androidx.arch.core:core-testing:$rootProject.archCoreTest"
     androidTestImplementation "androidx.test.ext:junit:$rootProject.jUnitVersion"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoCore"
+    androidTestImplementation "com.google.truth:truth:$rootProject.truthVersion"
+    androidTestImplementation("androidx.test.espresso:espresso-core:$rootProject.espressoCore") {
+        exclude group: 'org.checkerframework', module: 'checker'
+    }
+    androidTestImplementation("androidx.test.espresso:espresso-contrib:$rootProject.espressoCore") {
+        exclude group: 'org.checkerframework', module: 'checker'
+    }
+    androidTestImplementation("androidx.test.espresso:espresso-intents:$rootProject.espressoCore") {
+        exclude group: 'org.checkerframework', module: 'checker'
+    }
     androidTestImplementation "androidx.test.ext:junit-ktx:$rootProject.junitKtxVersion"
     androidTestImplementation "androidx.test:core-ktx:$rootProject.coreTest"
 }

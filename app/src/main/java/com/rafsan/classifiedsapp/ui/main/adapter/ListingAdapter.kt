@@ -53,6 +53,8 @@ class ListingAdapter(loader: ImageLoader) :
                 if (thumbs.isNotEmpty()) {
                     val imageUrl = thumbs[0]
                     imageLoader.downloadImage(imageUrl, binding.itemThumb, R.drawable.placeholder)
+                } else {
+                    binding.itemThumb.setImageResource(R.drawable.placeholder)
                 }
             }
             binding.itemName.text = item.name

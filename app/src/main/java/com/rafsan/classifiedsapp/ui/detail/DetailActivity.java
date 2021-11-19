@@ -36,7 +36,10 @@ public class DetailActivity extends BaseActivity<ActivityDetailBinding> {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         detailViewModel = new DetailViewModel();
         //Extract the data…
-        item = getIntent().getExtras().getParcelable("item");
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            item = bundle.getParcelable("item");
+        }
         configImageLoader();
         setupUI();
     }

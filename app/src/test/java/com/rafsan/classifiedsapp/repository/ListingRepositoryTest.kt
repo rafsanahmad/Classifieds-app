@@ -1,11 +1,11 @@
 package com.rafsan.classifiedsapp.repository
 
+import FakeDataUtil
 import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import com.google.common.truth.Truth.assertThat
-import com.rafsan.classifiedsapp.data.FakeDataUtil
 import com.rafsan.classifiedsapp.data.local.ListingDao
 import com.rafsan.classifiedsapp.data.local.ListingDatabase
 import com.rafsan.classifiedsapp.network.api.ApiHelper

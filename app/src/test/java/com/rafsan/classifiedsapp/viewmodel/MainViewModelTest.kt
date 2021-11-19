@@ -1,10 +1,10 @@
 package com.rafsan.classifiedsapp.viewmodel
 
+import FakeDataUtil
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.google.common.truth.Truth.assertThat
 import com.nhaarman.mockitokotlin2.whenever
-import com.rafsan.classifiedsapp.data.FakeDataUtil
 import com.rafsan.classifiedsapp.data.model.Results
 import com.rafsan.classifiedsapp.network.api.ListingApi
 import com.rafsan.classifiedsapp.network.repository.ListingRepository

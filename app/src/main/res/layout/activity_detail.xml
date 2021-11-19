@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_toEndOf="@+id/label_name"
-            android:text="@string/notebook"
+            android:text=""
             android:textColor="@color/black"
             android:textSize="18sp" />
 
@@ -56,7 +56,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="15dp"
             android:layout_toEndOf="@+id/label_name"
-            android:text="@string/aed_50"
+            android:text=""
             android:textColor="@color/black"
             android:textSize="18sp" />
 
@@ -78,7 +78,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="15dp"
             android:layout_toEndOf="@+id/label_name"
-            android:text="@string/_2020_8_90"
+            android:text=""
             android:textColor="@color/black"
             android:textSize="18sp" />
 

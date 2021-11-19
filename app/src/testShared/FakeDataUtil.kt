@@ -1,5 +1,3 @@
-package com.rafsan.classifiedsapp.data
-
 import com.rafsan.classifiedsapp.data.model.Pagination
 import com.rafsan.classifiedsapp.data.model.Result
 import com.rafsan.classifiedsapp.data.model.Results
@@ -59,7 +57,7 @@ object FakeDataUtil {
         val imageUrls = listOf("https://def.jpg")
         val result1 = Result(
             name = "Test1",
-            price = "20",
+            price = "20 USD",
             uid = "100",
             created_at = "2020-10-08",
             image_ids = imageIds,
