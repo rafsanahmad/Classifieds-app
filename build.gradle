@@ -23,6 +23,8 @@ buildscript {
         okhttpLoggingVersion = "4.7.2"
         mockitoCoreVersion = "3.7.7"
         mockitoInlineVersion = "3.2.4"
+        mockitoKotlin = "2.2.0"
+        mockWebserver = "4.7.2"
         archCoreTest = "2.1.0"
         coreTest = "1.4.0"
         robolectricVersion = "4.6.1"

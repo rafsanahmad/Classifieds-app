@@ -81,10 +81,12 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     testImplementation "org.mockito:mockito-core:$rootProject.mockitoCoreVersion"
     testImplementation "org.mockito:mockito-inline:$rootProject.mockitoInlineVersion"
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$rootProject.mockitoKotlin"
     testImplementation "androidx.arch.core:core-testing:$rootProject.archCoreTest"
     testImplementation "androidx.test:core:$rootProject.coreTest"
     testImplementation "org.robolectric:robolectric:$rootProject.robolectricVersion"
     testImplementation "com.google.truth:truth:$rootProject.truthVersion"
+    testImplementation "com.squareup.okhttp3:mockwebserver:$rootProject.mockWebserver"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$rootProject.coroutineTestVersion"
     androidTestImplementation "androidx.arch.core:core-testing:$rootProject.archCoreTest"
     androidTestImplementation "androidx.test.ext:junit:$rootProject.jUnitVersion"
