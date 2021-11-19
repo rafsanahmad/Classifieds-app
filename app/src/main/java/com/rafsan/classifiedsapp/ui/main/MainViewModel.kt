@@ -34,7 +34,7 @@ class MainViewModel @Inject constructor(
         fetchListing()
     }
 
-    private fun fetchListing() {
+    fun fetchListing() {
         if (networkHelper.isNetworkConnected()) {
             _listingResponse.postValue(NetworkResult.Loading())
 
@@ -73,7 +73,7 @@ class MainViewModel @Inject constructor(
     private fun getListingFromLocal() {
         viewModelScope.launch {
             val localListing = repository.getSavedListings()
-            if (localListing.isNotEmpty()) {
+            if (!localListing.isNullOrEmpty()) {
                 _listingResponse.postValue(NetworkResult.Success(localListing[0]))
             }
         }

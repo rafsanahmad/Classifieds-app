@@ -12,7 +12,7 @@ object FakeDataUtil {
         val listingResponse = Results(
             pagination = pagination, results = listings
         )
-        return NetworkResult.Success(listingResponse)
+        return return NetworkResult.Success(listingResponse)
     }
 
     fun getFakeListings(): MutableList<Result> {
