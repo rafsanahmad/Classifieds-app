@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.rafsan.classifiedsapp.base.BaseActivity
 import com.rafsan.classifiedsapp.databinding.ActivityMainBinding
 import com.rafsan.classifiedsapp.ui.detail.DetailActivity
@@ -39,6 +40,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     private fun setupRecyclerView() {
+        //Swipe refresh listener
+        val refreshListener = SwipeRefreshLayout.OnRefreshListener {
+            binding.swipeRefreshLayout.isRefreshing = false
+            mainViewModel.fetchListing()
+        }
+        binding.swipeRefreshLayout.setOnRefreshListener(refreshListener);
+
         listingAdapter = ListingAdapter(imageLoader)
         binding.rvItems.apply {
             adapter = listingAdapter

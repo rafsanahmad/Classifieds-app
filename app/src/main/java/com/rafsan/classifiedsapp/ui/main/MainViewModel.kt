@@ -31,7 +31,7 @@ class MainViewModel @Inject constructor(
         get() = _listingResponse
 
     init {
-        fetchListing()
+        getListingFromLocal()
     }
 
     fun fetchListing() {
@@ -75,6 +75,8 @@ class MainViewModel @Inject constructor(
             val localListing = repository.getSavedListings()
             if (!localListing.isNullOrEmpty()) {
                 _listingResponse.postValue(NetworkResult.Success(localListing[0]))
+            } else {
+                fetchListing()
             }
         }
     }

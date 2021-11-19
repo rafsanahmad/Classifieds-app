@@ -33,6 +33,7 @@ buildscript {
         jUnitVersion = "1.1.3"
         espressoCore = "3.4.0"
         junitKtxVersion = "1.1.3"
+        swpRefreshLayout = "1.1.0"
     }
     repositories {
         google()
