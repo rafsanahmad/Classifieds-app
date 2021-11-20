@@ -47,6 +47,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         val refreshListener = SwipeRefreshLayout.OnRefreshListener {
             binding.swipeRefreshLayout.isRefreshing = false
             mainViewModel.fetchListing()
+            //clear old cache
+            imageLoader.clearCache()
         }
         binding.swipeRefreshLayout.setOnRefreshListener(refreshListener);
     }

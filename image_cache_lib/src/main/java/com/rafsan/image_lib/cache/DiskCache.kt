@@ -11,7 +11,7 @@ import java.security.NoSuchAlgorithmException
 
 class DiskCache constructor(val context: Context) : CacheInterface {
 
-    private val maxFileSize = 10 * 1024 * 1024
+    private val maxFileSize = 10 * 1024 * 1024 //10MB
     private var cache: DiskLruCache =
         DiskLruCache.open(context.cacheDir, 1, 1, maxFileSize.toLong())
 
@@ -96,17 +96,5 @@ class DiskCache constructor(val context: Context) : CacheInterface {
             throw RuntimeException(e)
         }
         // For specifying wrong message digest algorithms
-    }
-
-    companion object {
-        private val INSTANCE: DiskCache? = null
-
-        @Synchronized
-        fun getInstance(context: Context): DiskCache {
-            return INSTANCE?.let { return INSTANCE }
-                ?: run {
-                    return DiskCache(context)
-                }
-        }
     }
 }
