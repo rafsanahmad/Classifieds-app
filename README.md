@@ -6,7 +6,7 @@ The app's functionality includes:
 2. When an item is selected from `RecyclerView` it will load the item detials in Detail Screen.
 3. The app uses a custom `image_cache_lib` to cache images. The library support `DISK_CACHE` and `MEMORY_CACHE`.
 4. On first load the app saves the products in a local database & on subsequent load - the items are loaded from local DB.
-5. The app supports `SwipeRefreshLayout` to refresh `RecyclerView` content from Remote source.
+5. The app supports `SwipeRefreshLayout` to pull to refresh `RecyclerView` content from Remote source.
 
 ## Architecture
 The app uses clean architecture with `MVVM(Model View View Model)` design pattern. 
@@ -61,7 +61,7 @@ you can set the gradle jdk in `Preferences->Build Tools->Gradle->Gradle JDK`
 6. `Lifecycle`, `ViewModel`
 7. `LiveData`
 8. `Room` for local database.
-9. `image_cache_lib` for image loading.
+9. **`image_cache_lib`** for image caching & loading.
 10. `Swipe Refresh Layout` for pull-to-refresh  `RecyclerView`.
 11. `Mockito` & `Junit` for Unit testing.
 12. `Robolectric` for Instrumentation testing
