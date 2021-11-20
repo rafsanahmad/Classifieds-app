@@ -1,5 +1,3 @@
-package com.rafsan.classifiedsapp.util
-
 import androidx.test.platform.app.InstrumentationRegistry
 import com.rafsan.classifiedsapp.ClassifiedsApp
 import java.io.IOException

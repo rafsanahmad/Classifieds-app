@@ -11,6 +11,7 @@ import com.rafsan.classifiedsapp.network.api.ApiHelperImpl
 import com.rafsan.classifiedsapp.network.api.ListingApi
 import com.rafsan.classifiedsapp.network.repository.ListingRepository
 import com.rafsan.classifiedsapp.utils.Constants.Companion.BASE_URL
+import com.rafsan.classifiedsapp.utils.Constants.Companion.TIMEOUT
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,6 +21,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 
@@ -40,9 +42,13 @@ object ApplicationModule {
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
         OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
+            .readTimeout(TIMEOUT, TimeUnit.SECONDS)
+            .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
             .build()
     } else OkHttpClient
         .Builder()
+        .readTimeout(TIMEOUT, TimeUnit.SECONDS)
+        .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
         .build()
 
 

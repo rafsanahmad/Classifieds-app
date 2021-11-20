@@ -1,72 +1,67 @@
 package com.rafsan.classifiedsapp.ui
 
-import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.RecyclerView
-import androidx.test.core.app.ActivityScenario
-import androidx.test.core.app.launchActivity
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.filters.LargeTest
-import com.google.common.truth.Truth.assertThat
 import com.rafsan.classifiedsapp.R
 import com.rafsan.classifiedsapp.ui.detail.DetailActivity
 import com.rafsan.classifiedsapp.ui.main.MainActivity
+import com.rafsan.classifiedsapp.util.EspressoIdlingResourceRule
+import org.hamcrest.CoreMatchers
 import org.junit.After
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
+
 @RunWith(AndroidJUnit4::class)
-@LargeTest
 class MainActivityTest {
 
-    /**
-     * Use {@link ActivityScenario} to create and launch the activity under test. This is a
-     * replacement for {@link androidx.test.rule.ActivityTestRule}.
-     */
     @get:Rule
-    var activityScenarioRule: ActivityScenarioRule<MainActivity> =
-        ActivityScenarioRule(MainActivity::class.java)
+    val activityRule = ActivityScenarioRule(MainActivity::class.java)
 
-    lateinit var scenario: ActivityScenario<MainActivity>
+    @get: Rule
+    val espressoIdlingResourceRule = EspressoIdlingResourceRule()
 
-    @Test
-    fun testRecyclerviewDataCount() {
-        scenario = launchActivity()
-        scenario.moveToState(Lifecycle.State.CREATED)
-        scenario.onActivity { activityScenarioRule ->
-            val recyclerView =
-                activityScenarioRule.findViewById<RecyclerView>(R.id.rv_items)
-            val itemCount = recyclerView.adapter?.itemCount ?: 0
-            assertThat(itemCount).isEqualTo(20)
-        }
+    @Before
+    fun setUp() {
+        Intents.init();
     }
 
     @Test
-    fun recyclerViewItemClickGoToDetailActivity() {
-        scenario = launchActivity()
-        scenario.moveToState(Lifecycle.State.CREATED)
+    fun test_isListItemsVisibleOnAppLaunch() {
+        onView(withId(R.id.rv_items)).check(matches(isDisplayed()))
+
+        onView(withId(R.id.progressBar)).check(matches(CoreMatchers.not(isDisplayed())))
+    }
+
+    @Test
+    fun test_selectListItem_isDetailActivityVisible() {
         onView(withId(R.id.rv_items))
             .perform(
                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                    0,
-                    click()
+                    1,
+                    ViewActions.click()
                 )
             )
-        Intents.init();
+
+        // Confirm nav to DetailActivity
         intended(hasComponent(DetailActivity::class.java.getName()))
         Intents.release()
     }
 
     @After
     fun cleanup() {
-        scenario.close()
+
     }
 }

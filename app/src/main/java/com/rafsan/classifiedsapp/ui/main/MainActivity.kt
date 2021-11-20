@@ -13,6 +13,7 @@ import com.rafsan.classifiedsapp.databinding.ActivityMainBinding
 import com.rafsan.classifiedsapp.ui.detail.DetailActivity
 import com.rafsan.classifiedsapp.ui.main.adapter.ListingAdapter
 import com.rafsan.classifiedsapp.utils.Constants.Companion.CACHE_SIZE
+import com.rafsan.classifiedsapp.utils.EspressoIdlingResource
 import com.rafsan.classifiedsapp.utils.NetworkResult
 import com.rafsan.image_lib.ImageLoader
 import com.rafsan.image_lib.cache.CacheType
@@ -29,6 +30,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun onViewReady(savedInstanceState: Bundle?) {
         super.onViewReady(savedInstanceState)
         configImageLoader()
+        setupUI()
         setupRecyclerView()
         setupObservers()
     }
@@ -39,14 +41,17 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         imageLoader = ImageLoader.getInstance(this, CACHE_SIZE, CacheType.DISK)
     }
 
-    private fun setupRecyclerView() {
+    private fun setupUI() {
+        EspressoIdlingResource.increment()
         //Swipe refresh listener
         val refreshListener = SwipeRefreshLayout.OnRefreshListener {
             binding.swipeRefreshLayout.isRefreshing = false
             mainViewModel.fetchListing()
         }
         binding.swipeRefreshLayout.setOnRefreshListener(refreshListener);
+    }
 
+    private fun setupRecyclerView() {
         listingAdapter = ListingAdapter(imageLoader)
         binding.rvItems.apply {
             adapter = listingAdapter
@@ -65,7 +70,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             when (response) {
                 is NetworkResult.Success -> {
                     hideProgressBar()
+                    showRecyclerview()
                     response.data?.let { listingResponse ->
+                        EspressoIdlingResource.decrement()
                         listingAdapter.differ.submitList(listingResponse.results)
                     }
                 }
@@ -76,6 +83,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
                 is NetworkResult.Error -> {
                     hideProgressBar()
+                    hideRecyclerview()
                     response.message?.let {
                         Toast.makeText(this@MainActivity, it, Toast.LENGTH_LONG).show()
                     }
@@ -98,5 +106,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     private fun hideProgressBar() {
         binding.progressBar.visibility = View.GONE
+    }
+
+    private fun showRecyclerview() {
+        binding.rvItems.visibility = View.VISIBLE
+    }
+
+    private fun hideRecyclerview() {
+        binding.rvItems.visibility = View.GONE
     }
 }

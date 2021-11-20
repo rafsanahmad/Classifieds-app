@@ -53,6 +53,11 @@ android {
             java.srcDirs += "$projectDir/src/testShared"
         }
     }
+
+    packagingOptions {
+        exclude 'META-INF/AL2.0'
+        exclude 'META-INF/LGPL2.1'
+    }
 }
 
 dependencies {
@@ -96,6 +101,9 @@ dependencies {
 
     //Swipe refresh layout
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:$rootProject.swpRefreshLayout"
+
+    //idling resource
+    implementation "androidx.test.espresso:espresso-idling-resource:$rootProject.espressoCore"
 
     //Testing dependencies
     testImplementation 'junit:junit:4.+'
